@@ -5,22 +5,30 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
-    <title>Document</title>
+    <style>
+*, html, body {
+    box-sizing: border-box;
+    margin: 10px; 
+    padding: 10px;
+}
+.container {
+    height: 100vh;
+    width: 100vh;
+}
+img {
+    height: 90%;
+    width: 90%;
+}
+
+    </style>
+    <title>Rotating Image</title>
 </head>
 
 <body>
     <div class="container">
+        <h3>Click the image to rotate it for a different viewpoint. Click the image again to stop the rotation.</h3>
         <div class="img">
             <img src="./coyolxauhqui.jpg" id="rotate-image" class="spin" alt="stone disc with carved image">
-            
-            <!-- <br>
-            <div>
-                <input type="button" value="90" onClick="rotateImage(this.value);" />
-                <input type="button" value="-90" onClick="rotateImage(this.value);" />
-                <input type="button" value="180" onClick="rotateImage(this.value);" />
-                <input type="button" value="360" onClick="rotateImage(this.value);" />
-            </div> -->
 
         </div>
 
@@ -28,7 +36,29 @@
         <script src="https://code.jquery.com/jquery-3.6.0.js"
             integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
-        <script src="./script.js"></script>
+        <script>
+            $(function () {
+
+                var $rotate = $('.spin')
+
+                $rotate.click(function () {
+                    var $this = $(this);
+
+                    if ($this.data('rotating')) {
+                        clearInterval($this.data('rotating'));
+                        $this.data('rotating', false)
+                    } else {
+                        $this.data('rotating', setInterval(function () {
+                            var degree = $this.data('degree') || 0;
+                            $this.css({ transform: 'rotate(' + '-' + degree + 'deg)' });
+                            $this.data('degree', ++degree)
+                        }, 30));
+                    }
+                });
+
+            });
+
+        </script>
 </body>
 
 </html>
